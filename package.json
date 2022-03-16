@@ -15,5 +15,9 @@
   "bugs": {
     "url": "https://github.com/Ravenwulf/darksouls-msgs/issues"
   },
-  "homepage": "https://github.com/Ravenwulf/darksouls-msgs#readme"
+  "homepage": "https://github.com/Ravenwulf/darksouls-msgs#readme",
+  "dependencies": {
+    "ifunnynode": "^3.0.5"
+  },
+  "type": "module"
 }
