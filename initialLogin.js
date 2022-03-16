@@ -1,10 +1,14 @@
-import Client from "ifunnynode";
+const Client = require("ifunnynode").default;
+const dotenv = require('dotenv');
+dotenv.config();
 
 // Get your credentials
 const EMAIL = process.env.IFUNNY_NODE_EMAIL;
 const PASSWORD = process.env.IFUNNY_NODE_PASSWORD;
-const BASIC_TOKEN = process.env.IFUNNY_BASIC_TOKEN;
+const BASIC_TOKEN = new Client().basic_token; // Generates a new basic token.
+console.log(BASIC_TOKEN);
 
+// It's a good idea to use the same basic token for captcha requests, but you aren't required to pass in a basic token.
 const client = new Client({
 	basic: BASIC_TOKEN,
 });
@@ -16,9 +20,6 @@ client.on("login", async (new_bearer) => {
 
 (async () => {
 	try {
-		// The wrapper doesn't store the basic token, which needs to be reused to login, so you'll wanna store this before attempting a login
-		process.env.IFUNNY_BASIC_TOKEN = client.basic_token;
-
 		// Since we don't have a bearer token stored, we need to pass an email and a password
 		await client.login({
 			email: EMAIL,
@@ -28,7 +29,7 @@ client.on("login", async (new_bearer) => {
 		// check if error was CaptchaError
 		if (err.captcha_url) {
 			// Open this url in the browser and solve it, then make the request again, using the same basic token
-			console.log(captcha_url);
+			console.log(err.captcha_url);
 		} else {
 			// NOT a CaptchaError
 			throw err;
