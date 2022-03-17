@@ -1,38 +1,32 @@
-const Client = require("ifunnynode").default;
 const dotenv = require('dotenv');
+const fs = require('fs')
 dotenv.config();
+const { Client } = require('ifunnynode');
 
-// Get your credentials
-const EMAIL = process.env.IFUNNY_NODE_EMAIL;
-const PASSWORD = process.env.IFUNNY_NODE_PASSWORD;
-const BASIC_TOKEN = new Client().basic_token; // Generates a new basic token.
-console.log(BASIC_TOKEN);
-
-// It's a good idea to use the same basic token for captcha requests, but you aren't required to pass in a basic token.
 const client = new Client({
-	basic: BASIC_TOKEN,
+	basic: process.env.IFUNNY_BASIC_TOKEN
 });
 
-// Login event emits a boolean if it had to generate a new bearer token.
-client.on("login", async (new_bearer) => {
-	console.log(`new bearer ${new_bearer}`);
-});
+console.log( (client.basic_token == process.env.IFUNNY_BASIC_TOKEN) ? "CHECK 1 PASSED" : "CHECK 1 FAILED!");
 
-(async () => {
+(async ()=> {
 	try {
-		// Since we don't have a bearer token stored, we need to pass an email and a password
 		await client.login({
-			email: EMAIL,
-			password: PASSWORD,
-		});
+			email: process.env.IFUNNY_NODE_EMAIL,
+			password: process.env.IFUNNY_NODE_PASSWORD
+		})
 	} catch (err) {
-		// check if error was CaptchaError
-		if (err.captcha_url) {
-			// Open this url in the browser and solve it, then make the request again, using the same basic token
-			console.log(err.captcha_url);
+		if (err?.captcha_url) {
+			console.log(err.captcha_url) // This is the URL you need to open in your browser.
+			// fs.writeFile('./test.txt', err.captcha_url, err => {
+			// 	if (err) {
+			// 		console.error(err)
+			// 		return
+			// 	}
+			// 	//file written successfully
+			// })
 		} else {
-			// NOT a CaptchaError
-			throw err;
+			console.log(err) // NOT A CAPTCHA ERROR
 		}
 	}
 })();
