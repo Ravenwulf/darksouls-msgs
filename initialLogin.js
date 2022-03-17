@@ -4,10 +4,11 @@ dotenv.config();
 const { Client } = require('ifunnynode');
 
 const client = new Client({
-	basic: process.env.IFUNNY_BASIC_TOKEN
+	basic: process.env.IFUNNY_BASIC_TOKEN,
+	user_agent: "iFunny/7.22(1129850) Android/12 (samsung; SM-G996U; samsung)"
 });
 
-console.log( (client.basic_token == process.env.IFUNNY_BASIC_TOKEN) ? "CHECK 1 PASSED" : "CHECK 1 FAILED!");
+console.log(client.user_agent);
 
 (async ()=> {
 	try {
