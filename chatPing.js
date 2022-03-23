@@ -16,7 +16,6 @@ client.login();
 client.on("login", async () => {
 	// Log info to the console (optional)
 	console.log(`Client logged in as ${await client.nick} (${client.id_sync})`);
-    console.log(await new User().by_nick('ravenr_'))
 
 	// Connect to chats
 	client.chats.connect();
