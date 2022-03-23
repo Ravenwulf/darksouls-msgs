@@ -5,7 +5,7 @@ const { Client } = require('ifunnynode');
 
 const client = new Client({
 	basic: process.env.IFUNNY_BASIC_TOKEN,
-	user_agent: "iFunny/7.22(1129850) Android/12 (samsung; SM-G996U; samsung)"
+	// user_agent: "iFunny/7.22(1129850) Android/12 (samsung; SM-G996U; samsung)"
 });
 
 console.log(client.user_agent);
@@ -27,7 +27,7 @@ console.log(client.user_agent);
 			// 	//file written successfully
 			// })
 		} else {
-			console.log(err) // NOT A CAPTCHA ERROR
+			console.log(err.config.headers) // NOT A CAPTCHA ERROR
 		}
 	}
 })();

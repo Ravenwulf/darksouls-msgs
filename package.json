@@ -18,6 +18,7 @@
   "homepage": "https://github.com/Ravenwulf/darksouls-msgs#readme",
   "dependencies": {
     "dotenv": "^16.0.0",
-    "ifunnynode": "^3.0.5"
+    "got": "^11.8.0",
+    "ifunnynode": "^3.0.10"
   }
 }
